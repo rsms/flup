@@ -14,6 +14,8 @@ This was a quick hack done in a few hours so it's far from polished and have ver
 
 3. When you're done, you should automatically arrive back to Flup.
 
+> **Note:** Flup requires Mac OS X 10.6 or later and an Intel machine (64-bit or 32-bit).
+
 ## Usage
 
 When a picture is dropped on Flup it's immediately uploaded. By default the uploaded image will be private (that is, only visible to you).
