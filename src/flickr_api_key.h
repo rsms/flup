@@ -1,0 +1,2 @@
+#define FLICKR_API_KEY             "d15fa8e30b300f50271e32e70f0098aa"
+#define FLICKR_API_SHARED_SECRET   "b24b948db101fb94"
