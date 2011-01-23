@@ -86,6 +86,7 @@ static NSUserDefaults *g_defaults = nil;
   if (authToken) {
     flickrContext_.authToken = authToken;
   }
+  applicationDidFinishLaunching_ = YES;
 }
 
 
@@ -99,9 +100,9 @@ static NSUserDefaults *g_defaults = nil;
 
 - (IBAction)uploadImage:(id)sender {
   // todo: check if authorized
-  NSImage *image = imageDropView_.image;
+  //NSImage *image = imageDropView_.image;
   NSURL *imageURL = imageDropView_.url;
-  NSLog(@"%@ %@ -- %@", NSStringFromSelector(_cmd), image, imageURL);
+  //NSLog(@"%@ %@ -- %@", NSStringFromSelector(_cmd), image, imageURL);
 
   // filename
   NSString *filename = [imageURL lastPathComponent];
@@ -151,6 +152,22 @@ static NSUserDefaults *g_defaults = nil;
        suggestedFilename:filename
                 MIMEType:mimeType
                arguments:params];
+  NSLog(@"uploading %@...", imageURL);
+}
+
+
+- (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
+  NSLog(@"openFiles:%@", filenames);
+  if (filenames.count > 1) {
+    [self presentErrorMessage:@"Flup can only handle one image at the time. "
+                               "Please drop single images on me. I like that."];
+    return;
+  }
+  shouldTerminateWhenDone_ = !applicationDidFinishLaunching_;
+  if (filenames.count != 0) {
+    imageDropView_.url = [NSURL fileURLWithPath:[filenames objectAtIndex:0]];
+    [self uploadImage:self];
+  }
 }
 
 
@@ -173,6 +190,7 @@ static NSUserDefaults *g_defaults = nil;
     [req callAPIMethodWithGET:@"flickr.photos.getSizes"
                     arguments:[NSDictionary dictionaryWithObjectsAndKeys:
                     photoId, @"photo_id", nil]];
+    NSLog(@"fetching URLs for [%@] %@...", photoId, imageDropView_.url);
     return;
   } else if (req.sessionInfo == kGetImageSizesStep) {
     NSArray *imageSizes = [params valueForKeyPath:@"sizes.size"];
@@ -227,6 +245,10 @@ static NSUserDefaults *g_defaults = nil;
 		[pb clearContents];
     [pb setString:sourceURLString forType:NSURLPboardType];
     [pb setString:stringRep forType:NSStringPboardType];
+
+    // terminate?
+    if (shouldTerminateWhenDone_)
+      [NSApp terminate:self];
   }
 	[progressIndicator_ stopAnimation:self];
   [imageDropView_ setEditable:YES];
@@ -236,7 +258,8 @@ static NSUserDefaults *g_defaults = nil;
 
 
 - (void)flickrAPIRequest:(OFFlickrAPIRequest *)req
-        didFailWithError:(NSError *)inError {
+        didFailWithError:(NSError *)error {
+  NSLog(@"Flickr API request failed: (%@) %@", req, error);
   NSString *msg = @"Unspecified Flickr API error";
 	if (req.sessionInfo == kGetAuthTokenStep) {
     msg = @"Failed to receive authentication token from Flickr";
@@ -245,6 +268,9 @@ static NSUserDefaults *g_defaults = nil;
 		[self setAndStoreFlickrAuthToken:nil];
 	} else if (req.sessionInfo == kUploadImageStep) {
     msg = @"Failed to upload image";
+  }
+  if (error) {
+    msg = [msg stringByAppendingFormat:@" -- %@", error];
   }
 	[progressIndicator_ stopAnimation:self];
   [imageDropView_ setEditable:YES];

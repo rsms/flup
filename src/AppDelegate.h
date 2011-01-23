@@ -9,6 +9,8 @@
   NSString *flickrUserName_;
   NSString *lastUploadedTitle_;
   NSString *lastUploadedId_;
+  BOOL applicationDidFinishLaunching_;
+  BOOL shouldTerminateWhenDone_;
   IBOutlet NSProgressIndicator *progressIndicator_;
   IBOutlet HImageView *imageDropView_;
   IBOutlet NSTextView *textView_;

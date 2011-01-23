@@ -41,5 +41,42 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+    <dict>
+      <key>CFBundleTypeExtensions</key><array>
+        <string>jpg</string>
+        <string>jpeg</string>
+        <string>jpg2</string>
+      </array><key>CFBundleTypeRole</key><string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key><array>
+        <string>gif</string>
+      </array><key>CFBundleTypeRole</key><string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key><array>
+        <string>png</string>
+      </array><key>CFBundleTypeRole</key><string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key><array>
+        <string>tif</string>
+        <string>tiff</string>
+      </array><key>CFBundleTypeRole</key><string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key><array>
+        <string>bmp</string>
+        <string>bm</string>
+      </array><key>CFBundleTypeRole</key><string>Viewer</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key><array>
+        <string>psd</string>
+      </array><key>CFBundleTypeRole</key><string>Viewer</string>
+    </dict>
+	</array>
 </dict>
 </plist>

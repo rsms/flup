@@ -48,7 +48,7 @@
   return url_;
 }
 
-- (void)setURL:(NSURL*)url {
+- (void)setUrl:(NSURL*)url {
   [self setImage:nil];
 	if (url) {
 		NSImage *image = [[[NSImage alloc] initWithContentsOfURL:url] autorelease];
