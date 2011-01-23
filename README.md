@@ -2,6 +2,8 @@
 
 Flup is a simple app for uploading images to Flickr by drag-and-drop and to quickly get the URL for the image file. Perfect for people who use Flickr to host images used on other sites (e.g. for blogging etc).
 
+![Screen shot 2011 01 23 at 04 33 40](http://farm6.static.flickr.com/5044/5379281631_eb3dac8f1b_o.png)
+
 This was a quick hack done in a few hours so it's far from polished and have very few features. For instance, only one single image can be uploaded at a time.
 
 ## Installation

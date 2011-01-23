@@ -206,8 +206,7 @@ static NSUserDefaults *g_defaults = nil;
     NSURL *sourceURL = [NSURL URLWithString:sourceURLString];
 
     // log info
-    NSAttributedString *astr = [[NSAttributedString alloc] initWithString:
-      @"\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n"
+    NSAttributedString *astr = [[NSAttributedString alloc] initWithString:@"\n"
       attributes:nil];
     [textView_.textStorage insertAttributedString:astr atIndex:0];
     astr = [[NSAttributedString alloc] initWithString:
@@ -224,6 +223,11 @@ static NSUserDefaults *g_defaults = nil;
       [NSDictionary dictionaryWithObjectsAndKeys:
         sourceURL, NSLinkAttributeName,
         nil]];
+    [textView_.textStorage insertAttributedString:astr atIndex:0];
+    astr = [[NSAttributedString alloc] initWithString:
+      [NSString stringWithFormat:@"%@ ➜ ",
+        [imageDropView_.url lastPathComponent]]
+      attributes:nil];
     [textView_.textStorage insertAttributedString:astr atIndex:0];
 
     // pasteboard objects
